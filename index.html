@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Store</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="top-nav">
+        <div class="top-left">
+            <img src="./assets/cart.png" id="cartToggle" alt="cart" 
+            height="40px" title="view cart">
+        </div>
+
+        <span class="logo">LOREM STORE</span>
+
+        <div class="top-right">
+            <button>Demo</button>
+        </div>
+    </div>
+    
+    <button class="side-toggle" id="side-toggle" title="Hide sidebar">
+            &lt <!--&gt for close tag-->
+    </button>
+
+    <div class="container">
+        <div class="sidebar" id="sidebar">
+        
+            <br>
+            <span onclick="loadData(products)">Products</span>
+            <span>Latest</span>
+            <span>Offers</span>
+            <span>Categories</span>
+           
+            <span>Redeem Code</span>
+            <span>Markets</span>
+            <span>About</span>
+                
+    </div>
+
+    <div class="content">
+        <div id="searchDiv">
+            <!--<button id="clearSearchBtn">clear search</button>-->
+            <input type="text" placeholder="Search for a product" id="search-input">
+            <button id="searchBtn">🔍</button>
+        </div>
+
+
+        <div class="main-display" id="main-display">
+            <div class="items" id="items"></div>
+        </div>
+    </div>
+
+    <div id="productFocus">
+        <button id="closeProductFocusBtn" class="closeFocusBtn">x</button>
+        <span id="focusedAlt" class="focusedAlt"></span>
+        <span id="focusedName" class="focusedName"></span>
+        <span id="focusedPrice" class="focusedPrice"></span>
+        <button id="addToCartBtn" class="addToCartBtn">Add to Cart</button>
+        <span id="descriptionTitle" class="descriptionTitle">Description</span>
+        <p id="productDescription" class="productDescription"></p>
+
+    </div>
+
+    <div id="cartFocus">
+        <button id="closeCartFocusBtn">x</button>
+        <span id="cartTitleSpan">Your Cart</span>
+        <div id="cartItemsDisplay"></div>
+    </div>
+
+    </div>
+
+    <script src="data.js"></script>
+    <script src="index.js"></script>
+    
+</body>
+</html>
