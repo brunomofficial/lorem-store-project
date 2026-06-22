@@ -36,6 +36,7 @@ const itemsDisplay = document.getElementById("items");
 const content = document.querySelector(".content");
 
 function loadData(selectProducts) {
+    
     itemsDisplay.innerHTML = selectProducts.map(product => 
         `
         <div class="item" id="prod_${product.name}">
@@ -72,7 +73,7 @@ document.addEventListener("keydown", event => {
 });
 
 function searchItem(s) {
-    let fProducts = products.filter(p => p.name == s)
+    let fProducts = products.filter(p => p.name.toLowerCase() == s.toLowerCase())
 
     loadData(fProducts)
 
@@ -100,7 +101,6 @@ function setFocus(product) {
     focusedName.textContent = product.name;
     focusedPrice.textContent = `$${product.price}`;
     productDescription.textContent = product.description;
-
     focusedProduct = product;
 }
 const addToCartBtn = document.getElementById("addToCartBtn");
@@ -115,26 +115,33 @@ addToCartBtn.addEventListener("click", () => {
 const cartFocus = document.getElementById("cartFocus");
 const cartItemsDisplay = document.getElementById("cartItemsDisplay");
 
+function removeFromCart(index) {
+    const cart = JSON.parse(localStorage.getItem("cart"));
+    cart.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    loadCart();
+}
 function loadCart() {
     const cartItems = JSON.parse(localStorage.getItem("cart"));
 
     if (cartItems.length == 0) {
-        cartItemsDisplay.innerHTML = "<span>No items in cart<span>"
+        cartItemsDisplay.innerHTML = "<span id='noCartItemsSpan'>No items in cart<span>"
         return
     }
-
-    cartItemsDisplay.innerHTML = cartItems.map(i => 
+ 
+    cartItemsDisplay.innerHTML = cartItems.map((i, index)=> 
         `
         <div class = "cartItem">
             <span class="cartItemAlt">${i.alt}</span>
             <span class="cartItemName">${i.name}</span>
-            <span class="cartItemPrice">${i.price}</span>
-            <button class="cartItemBuyBtn" onclick ={alert('${i.name}')}>Buy</button>
+            <span class="cartItemPrice">$${i.price}</span>
+            <button class="cartItemBuyBtn" onclick="alert('Successfully bought ${i.name} at ${i.price}')">Buy</button>
+            <button class="cartRemoveItemBtn" onclick="removeFromCart(${index})">remove</button>
         </div>
         `
     ).join("");
 
-    console.log(cartItems)
+
 }
 
 const cartToggle = document.getElementById("cartToggle");
