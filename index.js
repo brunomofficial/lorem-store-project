@@ -1,4 +1,4 @@
-let products = data;
+let products = JSON.parse(JSON.stringify(data));
 const sidebar = document.getElementById("sidebar");
 const sideToggle = document.getElementById("side-toggle");
 let sidebarOpen;
@@ -31,6 +31,7 @@ sideToggle.addEventListener("click", ()=>{
     } 
 });
 
+// Loading data
 const mainDisplay = document.getElementById("main-display");
 const itemsDisplay = document.getElementById("items");
 const content = document.querySelector(".content");
@@ -55,6 +56,44 @@ function loadData(selectProducts) {
     );
 }
 
+function reloadData() {
+    products = JSON.parse(JSON.stringify(data));
+    loadData(products);
+}
+
+// Sort
+document.getElementById("sortHtoL").addEventListener("click", () => {
+    // Descending
+    products.sort((a, b) => b.price - a.price);
+    loadData(products);
+});
+
+document.getElementById("sortLtoH").addEventListener("click", () => {
+    // Ascending
+    products.sort((a, b) => a.price - b.price);
+    loadData(products);
+})
+
+// Filter
+const filterBtn = document.getElementById("filterBtn");
+const maxInput = document.getElementById("maxInput");
+const minInput = document.getElementById("minInput");
+filterBtn.addEventListener("click", () => {
+    const max = parseInt(maxInput.value);
+    const min = parseInt(minInput.value) || 0;
+
+    if (!max || min > max) {
+        return
+    }
+
+    const filtered = data.filter(p => p.price <=  max && p.price >= min);
+    console.log(filtered)
+
+    loadData(filtered);
+});
+
+
+// Search
 const searchInput = document.getElementById("search-input");
 const searchBtn = document.getElementById("searchBtn");
 
@@ -62,7 +101,10 @@ searchBtn.addEventListener("click", () => {
     if (searchInput.value) {
         searchItem(searchInput.value)
     }
-})
+    else {
+        loadData(products);
+    }
+});
 
 document.addEventListener("keydown", event => {
     if (event.key == "Enter") {
@@ -73,15 +115,14 @@ document.addEventListener("keydown", event => {
 });
 
 function searchItem(s) {
-    let fProducts = products.filter(p => p.name.toLowerCase() == s.toLowerCase())
-
+    let fProducts = data.filter(p => p.name.toLowerCase() == s.toLowerCase())
     loadData(fProducts)
-
     if (fProducts.length == 0) {
         itemsDisplay.innerHTML = `<span id="itemNotFound">Item not found</span>`
     }
 }
 
+// Product Focus
 const productFocus = document.getElementById("productFocus");
 const closeProductFocusBtn = document.getElementById("closeProductFocusBtn");
 const focusedAlt = document.getElementById("focusedAlt");
@@ -112,15 +153,10 @@ addToCartBtn.addEventListener("click", () => {
     alert(`${focusedProduct.name} added to cart`);
 });
 
+// Cart
 const cartFocus = document.getElementById("cartFocus");
 const cartItemsDisplay = document.getElementById("cartItemsDisplay");
 
-function removeFromCart(index) {
-    const cart = JSON.parse(localStorage.getItem("cart"));
-    cart.splice(index, 1);
-    localStorage.setItem("cart", JSON.stringify(cart));
-    loadCart();
-}
 function loadCart() {
     const cartItems = JSON.parse(localStorage.getItem("cart"));
 
@@ -135,20 +171,41 @@ function loadCart() {
             <span class="cartItemAlt">${i.alt}</span>
             <span class="cartItemName">${i.name}</span>
             <span class="cartItemPrice">$${i.price}</span>
-            <button class="cartItemBuyBtn" onclick="alert('Successfully bought ${i.name} at ${i.price}')">Buy</button>
+            <button class="cartItemBuyBtn" onclick="buyItem(${index})">Buy</button>
             <button class="cartRemoveItemBtn" onclick="removeFromCart(${index})">remove</button>
         </div>
         `
     ).join("");
-
-
 }
+
+const balanceDisplay = document.getElementById("balanceDisplay");
+function buyItem(index) {
+    let balance = localStorage.getItem("balance") || 1000;
+    const cart = JSON.parse(localStorage.getItem("cart"));
+    const item = cart[index];
+    alert(`Successfully bought ${item.name} at ${item.price}`);
+    balance -= item.price;
+    localStorage.setItem("balance", balance);
+    balanceDisplay.textContent = `$${balance}`;
+}
+
+document.getElementById("resetBal").addEventListener("click", () => {
+    localStorage.setItem("balance", 1000);
+    balanceDisplay.textContent = `1000`;
+})
 
 const cartToggle = document.getElementById("cartToggle");
 cartToggle.addEventListener("click", () => {
     cartFocus.style.visibility = "visible";
     loadCart();
 });
+
+function removeFromCart(index) {
+    const cart = JSON.parse(localStorage.getItem("cart"));
+    cart.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    loadCart();
+}
 
 const closeCartFocusBtn = document.getElementById("closeCartFocusBtn");
 closeCartFocusBtn.addEventListener("click", () => {
@@ -157,7 +214,4 @@ closeCartFocusBtn.addEventListener("click", () => {
 
 loadData(products);
 loadCart()
-
-
-
 

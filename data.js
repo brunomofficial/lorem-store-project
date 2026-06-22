@@ -196,7 +196,18 @@ let data = [
     },
 
 ]
-let lorem = "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti saepe, commodi recusandae temporibus odio non nostrum neque, fugiat modi tempore hic velit? Saepe voluptatibus quisquam iure optio cumque, itaque voluptatem?";
+
+let lorem = `Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+\n
+Corrupti saepe, commodi recusandae temporibus odio non nostrum neque, 
+fugiat modi tempore hic velit? Saepe voluptatibus quisquam iure optio cumque, itaque voluptatem?
+\n
+Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+\nQuos unde illo, 
+hic repellat non quidem quibusdam soluta at pariatur impedit laborum, 
+reiciendis voluptatibus placeat tenetur voluptatem perspiciatis praesentium, doloremque amet.
+`;
+
 for (let d of data) {
     d.description = lorem;
 }

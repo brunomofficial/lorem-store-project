@@ -16,10 +16,10 @@
         <span class="logo">LOREM STORE</span>
 
         <div class="top-right">
-            <button>Demo</button>
+            <button id="account">Bal: <span id="balanceDisplay">$1000</span></button>         
         </div>
     </div>
-    
+  
     <button class="side-toggle" id="side-toggle" title="Hide sidebar">
             &lt <!--&gt for close tag-->
     </button>
@@ -28,14 +28,17 @@
         <div class="sidebar" id="sidebar">
         
             <br>
-            <span onclick="loadData(products)">Products</span>
-            <span>Latest</span>
-            <span>Offers</span>
-            <span>Categories</span>
-           
-            <span>Redeem Code</span>
-            <span>Markets</span>
-            <span>About</span>
+            <span onclick="reloadData()">Products</span>
+            <span id="sortHtoL">Sort<br>(high-low)</span>
+            <span id="sortLtoH">Sort<br>(low-high)</span>
+            <div id="filterDiv">
+                <span>Filter</span>
+                <input type="number" placeholder="max" id="maxInput">
+                <input type="number" placeholder="min" id="minInput">
+                <button id="filterBtn">filter</button>
+            </div>
+            
+            <span id="resetBal">Reset balance</span>
                 
     </div>
 
@@ -68,7 +71,6 @@
         <span id="cartTitleSpan">Your Cart</span>
         <div id="cartItemsDisplay"></div>
     </div>
-
     </div>
 
     <script src="data.js"></script>

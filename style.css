@@ -51,17 +51,19 @@ button:active {
     margin-right: 5px;
 }
 
-.top-right button{
+#account {
+    font-family: monospace;
     padding: 8px;
     border-radius: 5px;
     border: none;
     color: rgb(255, 255, 255);
-    background-color: rgb(0, 0, 0);
-    cursor: pointer;
+    background-color: rgb(70, 69, 69);
+    font-size: 1rem;
 }
 
-.top-right button:hover{
-    transform: scale(1.05);
+#balanceDisplay {
+    font-weight: bold;
+    color: rgb(29, 213, 29);
 }
 
 .sidebar{
@@ -104,20 +106,24 @@ button:active {
     transform: scale(1);
 }
 
-.sort-menu, .filter-menu{
+#filterDiv {
+    gap: 7px;
     display: flex;
     flex-direction: column;
-    gap: 5px;
 }
-.sidebar input{
+
+#filterDiv input {
     width: 50px;
     padding: 0;
     border-radius: 5px;
     border: 1px solid rgba(78, 72, 45, 0.811);
 }
-.sort-menu span, .filter-menu span{
+
+#filterBtn {
     border-radius: 5px;
-    width: fit-content;
+    background-color: rgba(0, 0, 0, 0.499);
+    color: white;
+    width: 50px;
 }
 
 .container{
@@ -245,6 +251,7 @@ button:active {
     font-style: italic;
     color: rgba(20, 20, 20, 0.625);
     font-family: monospace;
+    white-space: pre-wrap;
 }
 
 #focusedPrice {
@@ -291,6 +298,7 @@ button:active {
     box-shadow: 1px 1px 5px 1px rgba(125, 125, 125, 0.679);
     padding-inline: 5px;
     flex-wrap: wrap;
+    transition: all 0.5s ease;
 }
 
 .item:hover{
